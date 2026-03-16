@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		.mt-sm{
+			margin-top: 1vh;
+		}
+		.mt-md{
+			margin-top: 2vh;
+		}
+		.mt-lg{
+			margin-top: 3vh;
+		}
+		.ml-sm{
+			margin-left: 1vh;
+		}
+		.ml-md{
+			margin-left: 2vh;
+		}
+		.ml-lg{
+			margin-left: 3vh;
+		}
+		.mr-sm{
+			margin-right: 1vh;
+		}
+		.mr-md{
+			margin-right: 2vh;
+		}
+		.mr-lg{
+			margin-right: 3vh;
+		}
+		.mb-sm{
+			margin-bottom: 1vh;
+		}
+		.mb-md{
+			margin-bottom: 2vh;
+		}
+		.mb-lg{
+			margin-bottom: 3vh;
+		}
+		.flex-v {
+			display: flex;
+			flex-direction: column 
+		}
+		.flex-h {
+			display: flex;
+			flex-direction: row;
+		}
+		.flex-1 {
+			flex: 1;
+		}
+		.flex-2 {
+			flex: 2;
+		}
+		.flex-3 {
+			flex: 3;
+		}
+		.flex-4 {
+			flex: 4;
+		}
+		.flex-5 {
+			flex: 5;
+		}
+		a:hover {
+			background-color: rgb(149, 216, 216, 0.5);
+		}
+		nav {
+			background-color:rgb(149, 144, 144, 0.3);
+		}
+		nav.active {
+			display: flex;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<img src="file:///aki/mac0350/Downloads/Jupiterweb_files/usp-logo.png">
+		<img src="file:///aki/mac0350/Downloads/Jupiterweb_files/usp-logo-texto.png">
+				<hr style="border: none; height: 1vh; margin: 0; background-color: yellow;">
+		<hr style="border: none; height: 1vh; margin: 0;background-color: aqua;">
+
+		<hr style="border: none; height: 2vh;margin: 0; background-color: blue;">
+	</header>
+	<div class="flex-h mt-md">
+		<nav class="flex-v mr-lg flex-2">
+			
+			</code>
+			<a  onclick="toggleNav('Calendario')">Calendario Escolar</a>
+			<nav style="display: none;" id="Calendario" class="flex-v ml-md">
+				<a >2025</a>
+				<a >2026</a>
+			</nav>
+			<a  >Cursos de ingresso</a>
+			<a  onclick="toggleNav('Disciplinas')">Disciplinas</a>
+			<nav style="display: none;" id="Disciplinas" class="flex-v ml-md">
+				<a >Busca por disciplinas</a>
+				<a >Busca por turmas</a>
+			</nav>
+			<a  onclick="toggleNav('Editais')">Editais</a>
+			<nav style="display: none;" id="Editais" class="flex-v ml-md">
+				<a >Programa unificado de bolsas(PUB)</a>
+				<a >PEEG</a>
+				<a >PAP</a>
+			</nav>
+			<a >FAQ</a>
+		</nav>
+		<form class="flex-3">
+			<div class="flex-v">
+				<div class="flex-h" style="    justify-content: space-between;
+">
+					Login:
+			<input type="text"></div>
+			<div class="flex-h" style="    justify-content: space-between;
+">
+				Senha:
+			<input type="text"></div></div>
+		</form>
+	</div>
+</body>
+<script>
+function toggleNav(item) {
+	console.log(item);
+
+    const menu = document.getElementById(item);
+	console.log(menu)
+	if (menu.style.display=="flex"){
+	menu.style.display="none";
+	return}
+    menu.style.display="flex";
+}
+</script>
+</html>
