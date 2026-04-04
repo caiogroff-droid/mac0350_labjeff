@@ -110,15 +110,19 @@ class Plataforma(SQLModel, table=True):
 #         )
 
 #         return session.exec(query).all()
+
+@app.get("/", response_class=HTMLResponse)
+def root(request: Request):
+    return templates.TemplateResponse(request, "index.html")
     
 @app.post("/novoJogo", response_class=HTMLResponse)
-def criar_jogo(nome: str = Form(...)):
+def criar_jogo(nome: str = Form(...), descricao: str = Form(None), nota: int = Form(None)):
     with Session(engine) as session:
-        novo_jogo = Jogo(nome=nome)
+        novo_jogo = Jogo(nome=nome, descricao=descricao, nota=nota)
         session.add(novo_jogo)
         session.commit()
         session.refresh(novo_jogo)
-        return HTMLResponse(content=f"<p>O(a) jogo(a) {novo_jogo.nome} foi registrado(a)!</p>")
+        return HTMLResponse(content=f"<p>✅ {novo_jogo.nome} foi adicionado!</p>")
     
 @app.delete("/deletaJogo", response_class=HTMLResponse)
 def deletar_jogo(id: int):
@@ -132,23 +136,35 @@ def deletar_jogo(id: int):
         return HTMLResponse(content=f"<p>O(a) jogo(a) {jogo.nome} foi deletado(a)!</p>")
     
 @app.put("/atualizaJogo", response_class=HTMLResponse)
-def atualizar_jogo(id: int = Form(...), novoNome: str = Form(...)):
+def atualizar_jogo(
+    id: int = Form(...), 
+    nome: str = Form(None),
+    descricao: str = Form(None),
+    nota: int = Form(None)
+):
     with Session(engine) as session:
         query = select(Jogo).where(Jogo.id == id)
         jogo = session.exec(query).first()
-        if (not jogo):
+        
+        if not jogo:
             raise HTTPException(404, "Jogo não encontrado")
-        nomeAntigo = jogo.nome
-        jogo.nome = novoNome
+        
+        if nome:
+            jogo.nome = nome
+        if descricao:
+            jogo.descricao = descricao
+        if nota:
+            jogo.nota = nota
+            
+        session.add(jogo)
         session.commit()
         session.refresh(jogo)
-        return HTMLResponse(content=f"<p>O(a) jogo(a) {nomeAntigo} foi atualizado(a) para {jogo.nome}!</p>")
-
+        return HTMLResponse(content=f"<p>✅ {jogo.nome} foi atualizado!</p>")
 
 
 def buscar_jogos(busca):
     with Session(engine) as session:
-        query = select(Jogo).where(col(Jogo.nome).contains(busca)).order_by(Jogo.nome)
+        query = select(Jogo).where(col(Jogo.nome).contains(busca)).order_by(Jogo.nota.desc())  
         return session.exec(query).all()
     
 @app.get("/lista", response_class=HTMLResponse)

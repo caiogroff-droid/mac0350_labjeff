@@ -1,20 +1,44 @@
 <div>
-    <input type="text" 
-        name="busca" 
-        placeholder="Buscar..."
-        hx-get="/lista"
-        hx-trigger="input changed delay:500ms"
-        hx-select="#lista"
-        hx-target="#lista"
-        hx-indicator="#indicator">
-
-    <span id="indicator" class="htmx-indicator">Carregando...</span>
+  <input
+    type="text"
+    name="busca"
+    placeholder="Buscar..."
+    hx-get="/lista"
+    hx-trigger="input changed delay:500ms"
+    hx-select="#lista"
+    hx-target="#lista"
+    hx-indicator="#indicator"
+  />
+  <span id="indicator" class="htmx-indicator">Carregando...</span>
 </div>
-    <ul>
-        {% for jogo in jogos %}
-            <li>{{ jogo.id }} {{ jogo.nome }}</li>
-        {% else %}
-            <li>Não há jogos</li>
-        {% endfor %}
-    </ul>
+
+<div id="lista">
+  {% for jogo in jogos %}
+  <div id="jogo-list">
+    <div id="jogo-card-container" class="flex-h">
+      <!-- Botão drag para mover jogos -->
+      <button id="drag-button-{{ jogo.id }}" class="flex-1" draggable="true">
+        <img
+          src="/static/assets/drag.png"
+          alt="drag icon"
+          style="width: 20%; height: 20%"
+        />
+      </button>
+
+      <!-- Informa��ões do jogo -->
+      <div id="jogo-card-{{ jogo.id }}" class="flex-3 ml-lg">
+        <h2>{{ jogo.nome }}</h2>
+        <p>{{ jogo.descricao or 'Sem descrição' }}</p>
+      </div>
+
+      <!-- Score/Nota -->
+      <div id="avg-score-{{ jogo.id }}" class="flex-1 ml-lg">
+        <h3>Nota</h3>
+        <p>{{ jogo.nota or 'N/A' }}</p>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p>Não há jogos cadastrados</p>
+  {% endfor %}
 </div>

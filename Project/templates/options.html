@@ -1,8 +1,16 @@
 <form hx-post="/novoJogo" hx-target="#mensagem" hx-swap="beforeend">
   <input type="text" name="nome" placeholder="Nome do Jogo" required />
+  <input type="text" name="descricao" placeholder="Descrição" />
+  <input
+    type="number"
+    name="nota"
+    placeholder="Nota (0-100)"
+    min="0"
+    max="100"
+  />
   <button type="submit">Salvar</button>
 </form>
-<br />
+
 <div id="mensagem"></div>
 
 <form hx-delete="/deletaJogo" hx-target="#mensagem" hx-swap="beforeend">
@@ -12,6 +20,8 @@
 
 <form hx-put="/atualizaJogo" hx-target="#mensagem" hx-swap="beforeend">
   <input type="number" name="id" placeholder="ID do jogo" required />
-  <input type="text" name="novoNome" placeholder="Novo nome do jogo" required />
+  <input type="text" name="nome" placeholder="Novo nome" />
+  <input type="text" name="descricao" placeholder="Nova descrição" />
+  <input type="number" name="nota" placeholder="Nova nota" min="0" max="100" />
   <button type="submit">Atualizar jogo</button>
 </form>
