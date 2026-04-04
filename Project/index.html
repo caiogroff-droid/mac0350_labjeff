@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gaming ranking webapp</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script src="HTMX"></script>
+    <!-- Import do HTMX -->
+  </head>
+  <body id="main-container" class="flex-v mt-lg ml-lg mr-lg">
+    <section #="action buttons" class="flex-h">
+      <!-- Here will be buttons to add, edit and delete jogo entries -->
+      <button>Add jogo</button>
+      <button>Delete jogo</button>
+      <button>Change score formula</button>
+      <button hx-get="/jogos" hx-target="main">Load jogos</button>
+      <form hx-post="/jogos" hx-target="main">
+        <input name="title" placeholder="Jogo name" />
+        <input name="description" placeholder="Description" />
+
+        <button type="submit">Add</button>
+      </form>
+    </section>
+    <main
+      class="flex-v"
+      hx-get="/list"
+      hx-target="main"
+      hx-trigger="load"
+    ></main>
+  </body>
+
+  <script>
+    async function envia_jogo(params) {
+      const data = {
+        name: document.getElementById("jogo-name").value,
+        desc: document.getElementById("jogo-desc").value,
+        rating: document.getElementById("jogo-rating").value,
+      };
+      const response = await fetch("/jogos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        const result = await response.json();
+        alert("Jogo " + result.jogo + " adicionado!");
+      } else {
+        alert("Erro ao enviar!");
+      }
+    }
+  </script>
+</html>

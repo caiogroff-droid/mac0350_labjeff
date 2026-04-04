@@ -1,0 +1,17 @@
+<form hx-post="/novoJogo" hx-target="#mensagem" hx-swap="beforeend">
+  <input type="text" name="nome" placeholder="Nome do Jogo" required />
+  <button type="submit">Salvar</button>
+</form>
+<br />
+<div id="mensagem"></div>
+
+<form hx-delete="/deletaJogo" hx-target="#mensagem" hx-swap="beforeend">
+  <input type="number" name="id" placeholder="ID do jogo" required />
+  <button type="submit">Deletar jogo</button>
+</form>
+
+<form hx-put="/atualizaJogo" hx-target="#mensagem" hx-swap="beforeend">
+  <input type="number" name="id" placeholder="ID do jogo" required />
+  <input type="text" name="novoNome" placeholder="Novo nome do jogo" required />
+  <button type="submit">Atualizar jogo</button>
+</form>

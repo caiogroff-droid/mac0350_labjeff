@@ -1,0 +1,20 @@
+<div>
+    <input type="text" 
+        name="busca" 
+        placeholder="Buscar..."
+        hx-get="/lista"
+        hx-trigger="input changed delay:500ms"
+        hx-select="#lista"
+        hx-target="#lista"
+        hx-indicator="#indicator">
+
+    <span id="indicator" class="htmx-indicator">Carregando...</span>
+</div>
+    <ul>
+        {% for jogo in jogos %}
+            <li>{{ jogo.id }} {{ jogo.nome }}</li>
+        {% else %}
+            <li>Não há jogos</li>
+        {% endfor %}
+    </ul>
+</div>
