@@ -12,16 +12,10 @@
   <body id="main-container" class="flex-v mt-lg ml-lg mr-lg">
     <section #="action buttons" class="flex-h">
       <!-- Here will be buttons to add, edit and delete jogo entries -->
-      <button>Add jogo</button>
-      <button>Delete jogo</button>
-      <button>Change score formula</button>
-      <button hx-get="/jogos" hx-target="main">Load jogos</button>
-      <form hx-post="/jogos" hx-target="main">
-        <input name="title" placeholder="Jogo name" />
-        <input name="description" placeholder="Description" />
-
-        <button type="submit">Add</button>
-      </form>
+      <button hx-get="/lista" hx-target="main">Lista de jogos</button>
+      <button hx-get="/adicionarJogo" hx-target="main">
+        Editar lista de Jogos
+      </button>
     </section>
     <main
       class="flex-v"

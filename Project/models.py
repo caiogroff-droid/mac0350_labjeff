@@ -1,9 +1,10 @@
 from typing import List, Optional
-from fastapi import FastAPI, Form, HTTPException
+from fastapi import Form, HTTPException
 from fastapi.responses import HTMLResponse
-from sqlmodel import Field, SQLModel, create_engine, Session, select, Relationship
-from database import Session, engine
-from pydantic import BaseModel
+from sqlmodel import Field, SQLModel, Session, select, Relationship
+from sqlmodel import Session  
+from database import engine
+from main import app
 
 class Disponibilidade(SQLModel, table=True):
     jogo_id: Optional[int] = Field(
@@ -11,9 +12,9 @@ class Disponibilidade(SQLModel, table=True):
         foreign_key="jogo.id",
         primary_key=True,
     )
-    platf_id: Optional[int] = Field(
+    plataforma_id: Optional[int] = Field(
         default=None,
-        foreign_key="platf.id",
+        foreign_key="plataforma.id",
         primary_key=True,
     )
 
@@ -41,50 +42,49 @@ class Plataforma(SQLModel, table=True):
         link_model=Disponibilidade,
     )
 
-app = FastAPI()
-@app.get("/jogos")
-def buscar_jogos_por_nome(nome: Optional[str]):
-    with Session(engine) as session:
-        if nome:
-            query = select(Jogo).where(Jogo.nome.contains(nome))
-            return session.exec(query).all()
+# @app.get("/jogos")
+# def buscar_jogos_por_nome(nome: Optional[str]):
+#     with Session(engine) as session:
+#         if nome:
+#             query = select(Jogo).where(Jogo.nome.contains(nome))
+#             return session.exec(query).all()
 
-        query = select(Jogo)
-        return session.exec(query).all()
+#         query = select(Jogo)
+#         return session.exec(query).all()
     
-@app.patch("/jogos/{id}")
-def atualizar_descricao(id: str, descricao: str):
-    with Session(engine) as session:
-        query = select(Jogo).where(Jogo.id == id)
-        jogo = session.exec(query).first()
+# @app.patch("/jogos/{id}")
+# def atualizar_descricao(id: str, descricao: str):
+#     with Session(engine) as session:
+#         query = select(Jogo).where(Jogo.id == id)
+#         jogo = session.exec(query).first()
 
-        if not jogo:
-            raise HTTPException(404, "jogo não encontrado")
+#         if not jogo:
+#             raise HTTPException(404, "jogo não encontrado")
 
-        jogo.descricao = descricao
-        session.add(jogo)
-        session.commit()
-        session.refresh(jogo)
+#         jogo.descricao = descricao
+#         session.add(jogo)
+#         session.commit()
+#         session.refresh(jogo)
 
-        return jogo
+#         return jogo
     
-@app.get("/platf/{codigo}")
-def buscar_plataforma(codigo: str):
-    with Session(engine) as session:
-        query = select(Plataforma).where(Plataforma.codigo == codigo)
-        return session.exec(query).first()
+# @app.get("/plataforma/{codigo}")
+# def buscar_plataforma(codigo: str):
+#     with Session(engine) as session:
+#         query = select(Plataforma).where(Plataforma.codigo == codigo)
+#         return session.exec(query).first()
 
-@app.get("/platf/{codigo}/jogos")
-def jogos_da_plataforma(codigo: str):
-    with Session(engine) as session:
-        query = (
-            select(Jogo)
-            .join(Disponibilidade, Disponibilidade.jogo_id == Jogo.id)
-            .join(Plataforma, Disponibilidade.platf_id == Plataforma.id)
-            .where(Plataforma.codigo == codigo)
-        )
+# @app.get("/plataforma/{codigo}/jogos")
+# def jogos_da_plataforma(codigo: str):
+#     with Session(engine) as session:
+#         query = (
+#             select(Jogo)
+#             .join(Disponibilidade, Disponibilidade.jogo_id == Jogo.id)
+#             .join(Plataforma, Disponibilidade.plataforma_id == Plataforma.id)
+#             .where(Plataforma.codigo == codigo)
+#         )
 
-        return session.exec(query).all()
+#         return session.exec(query).all()
     
 @app.post("/novoJogo", response_class=HTMLResponse)
 def criar_jogo(nome: str = Form(...)):
