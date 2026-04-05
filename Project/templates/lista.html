@@ -1,38 +1,81 @@
-<search-box>
-  <input
-    type="text"
-    name="busca"
-    placeholder="Buscar..."
-    hx-get="/lista"
-    hx-trigger="input changed delay:500ms"
-    hx-select="#lista"
-    hx-target="#lista"
-    hx-indicator="#indicator"
-  />
-  <span id="indicator" class="htmx-indicator">Carregando...</span>
-</search-box>
+<div id="main">
+  <section id="filtros" class="flex-h mt-lg">
+    <button
+      hx-get="/lista?filtro=nota"
+      hx-target="#main"
+      id="nota"
+      onclick="activeFilterButton('nota')"
+    >
+      Ordenar por nota
+    </button>
+    <button
+      hx-get="/lista?filtro=nome"
+      hx-target="#main"
+      id="nome"
+      onclick="activeFilterButton('nome')"
+    >
+      Ordenar por nome
+    </button>
+    <button
+      hx-get="/lista?filtro=plataforma"
+      hx-target="#main"
+      id="plataforma"
+      onclick="activeFilterButton('plataforma')"
+    >
+      Ordenar por plataforma
+    </button>
+  </section>
 
-<div id="lista">
-  {% for jogo in jogos %}
-  <div id="jogo-list">
-    <div id="jogo-card-container" class="flex-h">
-      <div id="plataforma-card-{{ jogo.plataforma.id }}" class="flex-1">
-        <h3>{{ jogo.plataforma.nome }}</h3>
-      </div>
+  <search-box>
+    <input
+      type="text"
+      name="busca"
+      placeholder="Buscar..."
+      hx-get="/lista"
+      hx-trigger="input changed delay:500ms"
+      hx-select="#lista"
+      hx-target="#lista"
+      hx-indicator="#indicator"
+    />
+    <span id="indicator" class="htmx-indicator">Carregando...</span>
+  </search-box>
 
-      <div id="jogo-card-{{ jogo.id }}" class="flex-3 ml-lg">
-        <h2>{{ jogo.nome }}</h2>
-        <p>{{ jogo.descricao or 'Sem descrição' }}</p>
-        <p>{{ jogo.id }}</p>
-      </div>
+  <div id="lista">
+    {% for jogo in jogos %}
+    <div id="jogo-list">
+      <div id="jogo-card-container" class="flex-h">
+        <div id="plataforma-card-{{ jogo.plataforma.id }}" class="flex-1">
+          <h3>Plataforma:</h3>
+          {% for plataforma in jogo.plataforma %}
+          <h3>{{ plataforma.nome }}</h3>
+          {% else %}
+          <p>Sem plataforma associada</p>
+          {% endfor %}
+        </div>
 
-      <div id="avg-score-{{ jogo.id }}" class="flex-1 ml-lg">
-        <h3>Nota</h3>
-        <p>{{ jogo.nota or 'N/A' }}</p>
+        <div id="jogo-card-{{ jogo.id }}" class="flex-3 ml-lg">
+          <h2>{{ jogo.nome }} - ID: {{jogo.id}}</h2>
+          <p>{{ jogo.descricao or 'Sem descrição' }}</p>
+        </div>
+
+        <div id="avg-score-{{ jogo.id }}" class="flex-1 ml-lg">
+          <h3>Nota</h3>
+          <p>{{ jogo.nota or 'N/A' }}</p>
+        </div>
       </div>
     </div>
+    {% else %}
+    <p>Não há jogos cadastrados</p>
+    {% endfor %}
   </div>
-  {% else %}
-  <p>Não há jogos cadastrados</p>
-  {% endfor %}
 </div>
+<script>
+  function activeFilterButton(filter) {
+    document.querySelectorAll("#filtros button").forEach((btn) => {
+      btn.classList.remove("selected");
+    });
+    if (filter) {
+      document.getElementById(filter).classList.add("selected");
+    }
+  }
+</script>

@@ -43,6 +43,12 @@
     <input type="number" name="id" placeholder="ID do jogo" required />
     <input type="text" name="nome" placeholder="Novo nome" />
     <input type="text" name="descricao" placeholder="Nova descrição" />
+    <select class="select" name="plataforma_id">
+      <option value="" disabled selected>Selecione a nova plataforma</option>
+      {% for plataforma in plataformas %}
+      <option value="{{ plataforma.id }}">{{ plataforma.nome }}</option>
+      {% endfor %}
+    </select>
     <input
       type="number"
       name="nota"

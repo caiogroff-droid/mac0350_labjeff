@@ -13,12 +13,23 @@
 </search-box>
 
 <div id="plataforma-list">
-  {% for plataforma in plataformas %}
-  <div id="plataforma-card-{{ plataforma.id }}" class="flex-h">
-    <h2>{{ plataforma.nome }}</h2>
-    <p>{{ plataforma.id }}</p>
+  <div id="plataforma-card-container" class="flex-h">
+    {% for plataforma in plataformas %}
+    <div id="plataforma-card-{{ plataforma.id }}" class="flex-1 flex-v">
+      <h2>{{ plataforma.nome }} - ID: {{plataforma.id}}</h2>
+      {% if plataforma.jogos|length > 0 %}
+      <h3>Jogos disponíveis:</h3>
+      <ul>
+        {% for jogo in plataforma.jogos %}
+        <li>{{ jogo.nome }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Nenhum jogo disponível</p>
+      {% endif %}
+    </div>
+    {% else %}
+    <p>Não há plataformas cadastradas</p>
+    {% endfor %}
   </div>
-  {% else %}
-  <p>Não há plataformas cadastradas</p>
-  {% endfor %}
 </div>
