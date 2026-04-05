@@ -6,11 +6,9 @@
     <title>Gaming ranking webapp</title>
     <link rel="stylesheet" href="/static/styles.css" />
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-    <!-- Import do HTMX -->
   </head>
   <body id="main-container" class="flex-v mt-lg ml-lg mr-lg">
     <section #="action buttons" class="flex-h">
-      <!-- Here will be buttons to add, edit and delete jogo entries -->
       <button hx-get="/lista" hx-target="main">Lista de jogos</button>
       <button hx-get="/adicionarJogo" hx-target="main">
         Editar lista de Jogos

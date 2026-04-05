@@ -9,8 +9,8 @@ from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, col, select, Relationship, Field, SQLModel
 from contextlib import asynccontextmanager
 
-
-jogos = []
+# usando banco de dados, então não preciso mais dessa lista
+# jogos = []
 
 templates = Jinja2Templates(directory="templates")
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -23,6 +23,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+# Tive que usar os.path pq nn funcionava do modo descrito no tutorial
 app.mount(
     "/static",
     StaticFiles(directory=os.path.join(BASE_DIR, "static")),
