@@ -1,0 +1,32 @@
+<option-input>
+  <div id="mensagem"></div>
+  <hr />
+  <form hx-post="/novaPlataforma" hx-target="#mensagem" hx-swap="beforeend">
+    <input type="text" name="nome" placeholder="Nome da Plataforma" required />
+    <button type="submit">Salvar</button>
+  </form>
+
+  <div class="flex-h">
+    <form
+      hx-delete="/deletaPlataforma"
+      hx-target="#mensagem"
+      hx-swap="beforeend"
+    >
+      <input type="number" name="id" placeholder="ID da plataforma" required />
+      <button type="submit">Deletar plataforma</button>
+    </form>
+    <button
+      class="ml-sm flex-h"
+      hx-delete="/deletaTodasPlataformas"
+      hx-target="#mensagem"
+      hx-swap="beforeend"
+    >
+      Deletar&nbsp;<span style="color: red">TODAS</span>&nbsp;as plataformas
+    </button>
+  </div>
+  <form hx-put="/atualizaPlataforma" hx-target="#mensagem" hx-swap="beforeend">
+    <input type="number" name="id" placeholder="ID da plataforma" required />
+    <input type="text" name="nome" placeholder="Novo nome da plataforma" />
+    <button type="submit">Atualizar plataforma</button>
+  </form>
+</options-input>

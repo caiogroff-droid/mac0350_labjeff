@@ -6,7 +6,6 @@
     <title>Gaming ranking webapp</title>
     <link rel="stylesheet" href="/static/styles.css" />
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-    <script src="HTMX"></script>
     <!-- Import do HTMX -->
   </head>
   <body id="main-container" class="flex-v mt-lg ml-lg mr-lg">
@@ -16,35 +15,20 @@
       <button hx-get="/adicionarJogo" hx-target="main">
         Editar lista de Jogos
       </button>
+      <button hx-get="/plataformas" hx-target="main">
+        Lista de plataformas
+      </button>
+      <button hx-get="/adicionarPlataforma" hx-target="main">
+        Editar lista de plataformas
+      </button>
     </section>
     <main
       class="flex-v"
-      hx-get="/list"
+      hx-get="/lista"
       hx-target="main"
       hx-trigger="load"
     ></main>
   </body>
 
-  <script>
-    async function envia_jogo(params) {
-      const data = {
-        name: document.getElementById("jogo-name").value,
-        desc: document.getElementById("jogo-desc").value,
-        rating: document.getElementById("jogo-rating").value,
-      };
-      const response = await fetch("/jogos", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      if (response.ok) {
-        const result = await response.json();
-        alert("Jogo " + result.jogo + " adicionado!");
-      } else {
-        alert("Erro ao enviar!");
-      }
-    }
-  </script>
+  <script></script>
 </html>

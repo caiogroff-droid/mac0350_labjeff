@@ -1,0 +1,24 @@
+<search-box>
+  <input
+    type="text"
+    name="busca"
+    placeholder="Buscar..."
+    hx-get="/plataformas"
+    hx-trigger="input changed delay:500ms"
+    hx-select="#plataforma-list"
+    hx-target="#plataforma-list"
+    hx-indicator="#indicator"
+  />
+  <span id="indicator" class="htmx-indicator">Carregando...</span>
+</search-box>
+
+<div id="plataforma-list">
+  {% for plataforma in plataformas %}
+  <div id="plataforma-card-{{ plataforma.id }}" class="flex-h">
+    <h2>{{ plataforma.nome }}</h2>
+    <p>{{ plataforma.id }}</p>
+  </div>
+  {% else %}
+  <p>Não há plataformas cadastradas</p>
+  {% endfor %}
+</div>
