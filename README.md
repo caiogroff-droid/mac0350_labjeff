@@ -23,6 +23,13 @@ As mentioned early, the following functionalities will be implemented:
 # O que faltou fazer?
 Não consegui implementar a função de arrastar os cards para mudar a ordem como eu havia planejado e, dado isso, também acabei nao implementando o que eu afirmei como sendo o calculo do rank do jogo.
 
+# Sobre o uso de IAs
+Foi utilizado o copilot para alguns estilos css e para agilizar a escrita do html, porém a maior parte dos estilos de botao, input e outros foi tirado de um sample na internet.
+No backend, foi utilizado o chatGPT somente quando o código falhava em fazer o que era proposto, alguns exemplos que posso dar:
+    - Programei o backend de criar o jogo e plataforma independentes até fazer a sincronização dos dois e, quando adicinei incorretamente o id da plataforma na criaçao do jogo, o programa falhava por conta da sessão ter sido encerrada antes da tabela de plataformas ter sido sincronizada
+    - Os arquivos estaticos de assets não funcionaram corretamente com o script do tutorial, então tive que usar um outro script com a biblioteca os.
+    - Grande parte dos códigos foi reaproveitado dos exemplos de sala
+
 # Como executar
 Entre no ambiente de desenvolvimento .venv na pasta root, entre na pasta \Project e rode o webapp com o comando ```fastapi dev``` 
 Em suma:
