@@ -15,3 +15,19 @@ As mentioned early, the following functionalities will be implemented:
 
 # Como executar
  (todo)
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+# Comentarios pós completo
+
+# O que faltou fazer?
+Não consegui implementar a função de arrastar os cards para mudar a ordem como eu havia planejado e, dado isso, também acabei nao implementando o que eu afirmei como sendo o calculo do rank do jogo.
+
+# Como executar
+Entre no ambiente de desenvolvimento .venv na pasta root, entre na pasta \Project e rode o webapp com o comando ```fastapi dev``` 
+Em suma:
+
+```cd <MAC0350_LABJEFF path>```
+```source .venv/bin/activate```
+```cd Project```
+```fastapi dev```
