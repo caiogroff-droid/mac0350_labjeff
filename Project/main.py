@@ -133,11 +133,13 @@ def atualizar_jogo(
         if nota:
             jogo.nota = nota
         if plataforma_id:
-            disponibilidade = Disponibilidade(
-                jogo_id=jogo.id,
-                plataforma_id=plataforma_id
-            )
-            session.add(disponibilidade)
+            if (not session.exec(select(Disponibilidade).where(Disponibilidade.jogo_id == jogo.id,Disponibilidade.plataforma_id == plataforma_id)).first()):
+        
+                disponibilidade = Disponibilidade(
+                    jogo_id=jogo.id,
+                    plataforma_id=plataforma_id
+                )
+                session.add(disponibilidade)
 
             
         session.add(jogo)
