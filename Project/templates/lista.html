@@ -1,81 +1,56 @@
 <div id="main">
-  <section id="filtros" class="flex-h mt-lg">
-    <button
-      hx-get="/lista?filtro=nota"
-      hx-target="#main"
-      id="nota"
-      onclick="activeFilterButton('nota')"
-    >
-      Ordenar por nota
-    </button>
-    <button
-      hx-get="/lista?filtro=nome"
-      hx-target="#main"
-      id="nome"
-      onclick="activeFilterButton('nome')"
-    >
-      Ordenar por nome
-    </button>
-    <button
-      hx-get="/lista?filtro=plataforma"
-      hx-target="#main"
-      id="plataforma"
-      onclick="activeFilterButton('plataforma')"
-    >
-      Ordenar por plataforma
-    </button>
-  </section>
+  <div class="section-title">Rankings</div>
 
-  <search-box>
+  <div class="filter-bar">
+    <span style="font-size:13px; color:var(--text-muted)">Ordenar:</span>
+    <button hx-get="/lista?filtro=nota" hx-target="#main" id="nota" onclick="activeFilterButton('nota')">Por nota</button>
+    <button hx-get="/lista?filtro=nome" hx-target="#main" id="nome" onclick="activeFilterButton('nome')">Por nome</button>
+    <button hx-get="/lista?filtro=plataforma" hx-target="#main" id="plataforma" onclick="activeFilterButton('plataforma')">Por plataforma</button>
+    <span id="indicator" class="htmx-indicator" style="margin-left:auto">Carregando...</span>
+  </div>
+
+  <div class="search-wrap">
     <input
       type="text"
       name="busca"
-      placeholder="Buscar..."
+      placeholder="Buscar jogo..."
       hx-get="/lista"
-      hx-trigger="input changed delay:500ms"
+      hx-trigger="input changed delay:400ms"
       hx-select="#lista"
       hx-target="#lista"
       hx-indicator="#indicator"
     />
-    <span id="indicator" class="htmx-indicator">Carregando...</span>
-  </search-box>
+  </div>
 
   <div id="lista">
     {% for jogo in jogos %}
-    <div id="jogo-list">
-      <div id="jogo-card-container" class="flex-h">
-        <div id="plataforma-card-{{ jogo.plataforma.id }}" class="flex-1">
-          <h3>Plataforma:</h3>
-          {% for plataforma in jogo.plataforma %}
-          <h3>{{ plataforma.nome }}</h3>
-          {% else %}
-          <p>Sem plataforma associada</p>
-          {% endfor %}
-        </div>
-
-        <div id="jogo-card-{{ jogo.id }}" class="flex-3 ml-lg">
-          <h2>{{ jogo.nome }} - ID: {{jogo.id}}</h2>
-          <p>{{ jogo.descricao or 'Sem descrição' }}</p>
-        </div>
-
-        <div id="avg-score-{{ jogo.id }}" class="flex-1 ml-lg">
-          <h3>Nota</h3>
-          <p>{{ jogo.nota or 'N/A' }}</p>
-        </div>
+    <div class="game-card">
+      <div>
+        {% for plataforma in jogo.plataforma %}
+        <span class="game-platform-badge">{{ plataforma.nome }}</span>
+        {% else %}
+        <span class="game-platform-badge" style="opacity:0.5">—</span>
+        {% endfor %}
+      </div>
+      <div class="game-info">
+        <h3>{{ jogo.nome }}</h3>
+        <p>{{ jogo.descricao or 'Sem descrição' }}</p>
+      </div>
+      <div class="game-score">
+        <div class="score-num">{{ jogo.nota or '—' }}</div>
+        <div class="score-label">nota</div>
       </div>
     </div>
     {% else %}
-    <p>Não há jogos cadastrados</p>
+    <div class="empty-state"><p>Nenhum jogo cadastrado ainda.</p></div>
     {% endfor %}
   </div>
 </div>
+
 <script>
   function activeFilterButton(filter) {
-    document.querySelectorAll("#filtros button").forEach((btn) => {
-      btn.classList.remove("selected");
-    });
-    if (filter) {
-      document.getElementById(filter).classList.add("selected");
-    }
+    document.querySelectorAll('.filter-bar button').forEach(btn => btn.classList.remove('selected'));
+    const el = document.getElementById(filter);
+    if (el) el.classList.add('selected');
   }
 </script>

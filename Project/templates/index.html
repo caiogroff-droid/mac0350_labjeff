@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gaming ranking webapp</title>
+    <title>Game Ranking</title>
     <link rel="stylesheet" href="/static/styles.css" />
     <script src="https://unpkg.com/htmx.org@1.9.12"></script>
   </head>
-  <body id="main-container" class="flex-v mt-lg ml-lg mr-lg">
-    <section #="action buttons" class="flex-h">
-      <button hx-get="/lista" hx-target="main">Lista de jogos</button>
-      <button hx-get="/adicionarJogo" hx-target="main">
-        Editar lista de Jogos
-      </button>
-      <button hx-get="/plataformas" hx-target="main">
-        Lista de plataformas
-      </button>
-      <button hx-get="/adicionarPlataforma" hx-target="main">
-        Editar lista de plataformas
-      </button>
-    </section>
-    <main
-      class="flex-v"
-      hx-get="/lista"
-      hx-target="main"
-      hx-trigger="load"
-    ></main>
+  <body>
+    <div id="main-container">
+      <nav id="topbar">
+        <span class="brand">🎮 Game Ranking</span>
+        <button hx-get="/lista" hx-target="main" onclick="setActive(this)">Lista de Jogos</button>
+        <button hx-get="/adicionarJogo" hx-target="main" onclick="setActive(this)">Adicionar Jogo</button>
+        <button hx-get="/plataformas" hx-target="main" onclick="setActive(this)">Plataformas</button>
+        <button hx-get="/adicionarPlataforma" hx-target="main" onclick="setActive(this)">Adicionar Plataforma</button>
+      </nav>
+      <main hx-get="/lista" hx-target="main" hx-trigger="load"></main>
+    </div>
+    <script>
+      function setActive(btn) {
+        document.querySelectorAll('nav#topbar button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    </script>
   </body>
-
-  <script></script>
 </html>

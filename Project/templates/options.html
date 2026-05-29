@@ -1,61 +1,100 @@
-<option-input>
-  <div id="mensagem"></div>
-  <hr />
-  <form hx-post="/novoJogo" hx-target="#mensagem" hx-swap="beforeend">
-    <input type="text" name="nome" placeholder="Nome do Jogo" required />
-    <input type="text" name="descricao" placeholder="Descrição" />
-    <select class="select" name="plataforma_id" required>
-      {% if plataformas|length == 0 %}
-      <option value="" disabled selected>
-        Adicione uma plataforma primeiro
-      </option>
-      {% else %}
-      <option value="" disabled selected>Selecione a plataforma</option>
-      {% for plataforma in plataformas %}
-      <option value="{{ plataforma.id }}">{{ plataforma.nome }}</option>
-      {% endfor %} {% endif %}
-    </select>
-    <input
-      type="number"
-      name="nota"
-      placeholder="Nota (0-100)"
-      min="0"
-      max="100"
-    />
-    <button type="submit">Salvar</button>
-  </form>
+<div>
+  <div class="section-title">Gerenciar Jogos</div>
 
-  <div class="flex-h">
-    <form hx-delete="/deletaJogo" hx-target="#mensagem" hx-swap="beforeend">
-      <input type="number" name="id" placeholder="ID do jogo" required />
-      <button type="submit">Deletar jogo</button>
+  <div class="add-form-panel">
+    <div class="card-header">Adicionar novo jogo</div>
+    <div id="mensagem"></div>
+    <form hx-post="/novoJogo" hx-target="#mensagem" hx-swap="beforeend">
+      <div class="form-row" style="margin-bottom:0.75rem">
+        <div class="form-group">
+          <label>Nome do jogo</label>
+          <input type="text" name="nome" placeholder="Ex: Hollow Knight" required />
+        </div>
+        <div class="form-group">
+          <label>Nota (0-100)</label>
+          <input type="number" name="nota" placeholder="95" min="0" max="100" />
+        </div>
+      </div>
+      <div class="form-row full" style="margin-bottom:0.75rem">
+        <div class="form-group">
+          <label>Descrição</label>
+          <input type="text" name="descricao" placeholder="Breve descrição..." />
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:1rem">
+        <div class="form-group">
+          <label>Plataforma</label>
+          <select name="plataforma_id" required>
+            {% if plataformas|length == 0 %}
+            <option value="" disabled selected>Adicione uma plataforma primeiro</option>
+            {% else %}
+            <option value="" disabled selected>Selecione a plataforma</option>
+            {% for plataforma in plataformas %}
+            <option value="{{ plataforma.id }}">{{ plataforma.nome }}</option>
+            {% endfor %}
+            {% endif %}
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="primary">Salvar jogo</button>
     </form>
-    <button
-      class="ml-sm flex-h"
-      hx-delete="/deletaTudo"
-      hx-target="#mensagem"
-      hx-swap="beforeend"
-    >
-      Deletar&nbsp;<span style="color: red">TODOS</span>&nbsp;os jogos
-    </button>
   </div>
-  <form hx-put="/atualizaJogo" hx-target="#mensagem" hx-swap="beforeend">
-    <input type="number" name="id" placeholder="ID do jogo" required />
-    <input type="text" name="nome" placeholder="Novo nome" />
-    <input type="text" name="descricao" placeholder="Nova descrição" />
-    <select class="select" name="plataforma_id">
-      <option value="" disabled selected>Selecione a nova plataforma</option>
-      {% for plataforma in plataformas %}
-      <option value="{{ plataforma.id }}">{{ plataforma.nome }}</option>
-      {% endfor %}
-    </select>
-    <input
-      type="number"
-      name="nota"
-      placeholder="Nova nota"
-      min="0"
-      max="100"
-    />
-    <button type="submit">Atualizar jogo</button>
-  </form>
-</option-input>
+
+  <hr />
+
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="card-header">Atualizar jogo</div>
+    <form hx-put="/atualizaJogo" hx-target="#mensagem" hx-swap="beforeend">
+      <div class="form-row" style="margin-bottom:0.75rem">
+        <div class="form-group">
+          <label>ID do jogo</label>
+          <input type="number" name="id" placeholder="ID" required />
+        </div>
+        <div class="form-group">
+          <label>Nova nota</label>
+          <input type="number" name="nota" placeholder="0-100" min="0" max="100" />
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom:0.75rem">
+        <div class="form-group">
+          <label>Novo nome</label>
+          <input type="text" name="nome" placeholder="Nome atualizado" />
+        </div>
+        <div class="form-group">
+          <label>Nova plataforma</label>
+          <select name="plataforma_id">
+            <option value="" disabled selected>Selecionar</option>
+            {% for plataforma in plataformas %}
+            <option value="{{ plataforma.id }}">{{ plataforma.nome }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="form-row full" style="margin-bottom:1rem">
+        <div class="form-group">
+          <label>Nova descrição</label>
+          <input type="text" name="descricao" placeholder="Nova descrição" />
+        </div>
+      </div>
+      <button type="submit">Atualizar jogo</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Remover jogos</div>
+    <div class="flex-h">
+      <form hx-delete="/deletaJogo" hx-target="#mensagem" hx-swap="beforeend" style="display:flex;gap:0.5rem;align-items:flex-end;flex:1">
+        <div class="form-group" style="flex:1">
+          <label>ID do jogo</label>
+          <input type="number" name="id" placeholder="ID" required />
+        </div>
+        <button type="submit" class="danger">Deletar</button>
+      </form>
+      <button class="danger" hx-delete="/deletaTudo" hx-target="#mensagem" hx-swap="beforeend"
+        style="align-self:flex-end"
+        onclick="return confirm('Tem certeza? Isso vai apagar TODOS os jogos.')">
+        Deletar todos
+      </button>
+    </div>
+  </div>
+</div>

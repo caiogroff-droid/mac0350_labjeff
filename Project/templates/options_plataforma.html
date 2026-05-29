@@ -1,32 +1,52 @@
-<option-input>
-  <div id="mensagem"></div>
-  <hr />
-  <form hx-post="/novaPlataforma" hx-target="#mensagem" hx-swap="beforeend">
-    <input type="text" name="nome" placeholder="Nome da Plataforma" required />
-    <button type="submit">Salvar</button>
-  </form>
+<div>
+  <div class="section-title">Gerenciar Plataformas</div>
 
-  <div class="flex-h">
-    <form
-      hx-delete="/deletaPlataforma"
-      hx-target="#mensagem"
-      hx-swap="beforeend"
-    >
-      <input type="number" name="id" placeholder="ID da plataforma" required />
-      <button type="submit">Deletar plataforma</button>
+  <div class="add-form-panel">
+    <div class="card-header">Adicionar plataforma</div>
+    <div id="mensagem"></div>
+    <form hx-post="/novaPlataforma" hx-target="#mensagem" hx-swap="beforeend" style="display:flex;gap:0.75rem;align-items:flex-end">
+      <div class="form-group" style="flex:1">
+        <label>Nome da plataforma</label>
+        <input type="text" name="nome" placeholder="Ex: PC, PlayStation 5..." required />
+      </div>
+      <button type="submit" class="primary">Salvar</button>
     </form>
-    <button
-      class="ml-sm flex-h"
-      hx-delete="/deletaTodasPlataformas"
-      hx-target="#mensagem"
-      hx-swap="beforeend"
-    >
-      Deletar&nbsp;<span style="color: red">TODAS</span>&nbsp;as plataformas
-    </button>
   </div>
-  <form hx-put="/atualizaPlataforma" hx-target="#mensagem" hx-swap="beforeend">
-    <input type="number" name="id" placeholder="ID da plataforma" required />
-    <input type="text" name="nome" placeholder="Novo nome da plataforma" />
-    <button type="submit">Atualizar plataforma</button>
-  </form>
-</options-input>
+
+  <hr />
+
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="card-header">Atualizar plataforma</div>
+    <form hx-put="/atualizaPlataforma" hx-target="#mensagem" hx-swap="beforeend">
+      <div class="form-row" style="margin-bottom:1rem">
+        <div class="form-group">
+          <label>ID da plataforma</label>
+          <input type="number" name="id" placeholder="ID" required />
+        </div>
+        <div class="form-group">
+          <label>Novo nome</label>
+          <input type="text" name="nome" placeholder="Novo nome" />
+        </div>
+      </div>
+      <button type="submit">Atualizar plataforma</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Remover plataformas</div>
+    <div class="flex-h">
+      <form hx-delete="/deletaPlataforma" hx-target="#mensagem" hx-swap="beforeend" style="display:flex;gap:0.5rem;align-items:flex-end;flex:1">
+        <div class="form-group" style="flex:1">
+          <label>ID da plataforma</label>
+          <input type="number" name="id" placeholder="ID" required />
+        </div>
+        <button type="submit" class="danger">Deletar</button>
+      </form>
+      <button class="danger" hx-delete="/deletaTodasPlataformas" hx-target="#mensagem" hx-swap="beforeend"
+        style="align-self:flex-end"
+        onclick="return confirm('Apagar TODAS as plataformas?')">
+        Deletar todas
+      </button>
+    </div>
+  </div>
+</div>
